@@ -1,6 +1,7 @@
 package kz.ya.contactlist.controller;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import kz.ya.contactlist.dto.ContactDTO;
 import kz.ya.contactlist.entity.Contact;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -30,18 +32,22 @@ public class ContactController {
 
     @Autowired
     private ContactService contactService;
-    
+
     @GetMapping
-    public List<ContactDTO> findAll() {
-        return contactService.findAll();
-    }
-    
-    @GetMapping("/{name}")
-    public List<ContactDTO> search(@PathVariable String name) {
-        List<ContactDTO> list = contactService.findAllByName(name);
-        if (list.isEmpty()) {
-            throw new ContactNotFoundException(name);
+    public List<ContactDTO> search(@RequestParam(value = "search", required = false) String search) {
+        if (search == null || search.isEmpty()) {
+            // if no args were passed, then return all contacts
+            return contactService.findAll();
         }
+        
+        List<ContactDTO> list = new ArrayList<>();
+
+        // TODO: implement SearchCriteria and ContactSpecification
+        if (search.startsWith("name:")) {
+            String name = search.split(":")[1];
+            list = contactService.findAllByName(name);
+        }
+        
         return list;
     }
 

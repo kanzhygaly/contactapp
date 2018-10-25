@@ -1,11 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {ContactDTO} from '../model/contact.model';
 import { Observable } from 'rxjs';
-
-//const httpOptions = {
-//  headers: new HttpHeaders({'Content-Type': 'application/json'})
-//};
+import {ContactDTO} from "../model/contact.model";
 
 @Injectable({providedIn: 'root'})
 export class ContactService {
@@ -19,11 +16,11 @@ export class ContactService {
   }
 
   public getContactsByName(contact: ContactDTO): Observable<Array<ContactDTO>> {
-    return this.http.get<ContactDTO[]>(this.API + "/" + contact.name);
+    return this.http.get<ContactDTO[]>(this.API + "?search=name:" + contact.name);
   }
 
-  public getContactById(contact: ContactDTO) {
-    return this.http.get<ContactDTO>(this.API + "/" + contact.id);
+  public getContactById(contactId: number): Observable<ContactDTO> {
+    return this.http.get<ContactDTO>(this.API + "/" + contactId);
   }
 
   public deleteContact(contact: ContactDTO) {

@@ -34,7 +34,8 @@ export class EditContactComponent implements OnInit {
     });
 
     this.contactService.getContactById(contactId).subscribe((data : ContactDTO) => {
-      //this.editForm.setValue(data);
+      console.log(data.name)
+      this.editForm.setValue(data);
       this.contact = data;
     });
   }
