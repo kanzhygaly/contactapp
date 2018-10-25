@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ContactDTO} from '../model/contact.model';
 import { Observable } from 'rxjs';
-import {ContactDTO} from "../model/contact.model";
 
 @Injectable({providedIn: 'root'})
 export class ContactService {
@@ -19,7 +18,7 @@ export class ContactService {
     return this.http.get<ContactDTO[]>(this.API + "?search=name:" + contact.name);
   }
 
-  public getContactById(contactId: number): Observable<ContactDTO> {
+  public getContactById(contactId): Observable<ContactDTO> {
     return this.http.get<ContactDTO>(this.API + "/" + contactId);
   }
 

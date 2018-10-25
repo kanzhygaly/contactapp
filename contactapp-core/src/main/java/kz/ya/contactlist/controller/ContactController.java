@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import kz.ya.contactlist.dto.ContactDTO;
 import kz.ya.contactlist.entity.Contact;
-import kz.ya.contactlist.exception.ContactNotFoundException;
 import kz.ya.contactlist.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

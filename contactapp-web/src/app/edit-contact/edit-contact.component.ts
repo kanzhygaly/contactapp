@@ -3,7 +3,6 @@ import {first} from "rxjs/operators";
 import {Router} from '@angular/router';
 import {ContactDTO} from '../model/contact.model';
 import {ContactService} from '../service/contact.service';
-import {ContactDTO} from "../model/contact.model";
 
 @Component({
   selector: 'app-edit-contact',
