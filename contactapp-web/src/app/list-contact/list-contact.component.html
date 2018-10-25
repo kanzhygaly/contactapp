@@ -1,0 +1,27 @@
+<div class="col-md-6">
+  <h2>Contacts</h2>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th class="hidden">Id</th>
+      <th>Name</th>
+      <th>Photo</th>
+      <th colspan="2">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let contact of contacts">
+      <td class="hidden">{{contact.id}}</td>
+      <td>{{contact.name}}</td>
+      <td><img src="{{getTrustedURL(contact.photo)}}" alt="{{contact.photo}}"></td>
+      <td>
+        <button class="btn btn-danger" (click)="editContact(contact)">Edit</button>
+      </td>
+      <td>
+        <button class="btn btn-danger" (click)="deleteContact(contact)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
