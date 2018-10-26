@@ -14,8 +14,8 @@ export class ContactService {
     return this.http.get<ContactDTO[]>(this.API);
   }
 
-  public getContactsByName(contact: ContactDTO): Observable<Array<ContactDTO>> {
-    return this.http.get<ContactDTO[]>(this.API + "?search=name:" + contact.name);
+  public getContactsByName(contactName): Observable<Array<ContactDTO>> {
+    return this.http.get<ContactDTO[]>(this.API + "?search=name:" + contactName);
   }
 
   public getContactById(contactId): Observable<ContactDTO> {
@@ -28,7 +28,7 @@ export class ContactService {
 
   public saveContact(contact: ContactDTO): Observable<any> {
     if (contact.id) {
-      return this.http.post(this.API + "/" + contact.id, contact);
+      return this.http.put(this.API + "/" + contact.id, contact);
     } else {
       return this.http.post(this.API, contact);
     }

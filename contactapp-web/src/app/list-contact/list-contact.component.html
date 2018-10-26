@@ -1,7 +1,11 @@
 <div class="col-md-6">
   <h2>Contacts</h2>
 
-  <input [formControl]="findControl" placeholder="Contact name" />
+  <div class="form-group">
+    <label>Search: </label>
+    <input [formControl]="findControl" placeholder="Contact name..." />
+    <div *ngIf="error" class="alert alert-danger">Contacts not found</div>
+  </div>
 
   <table class="table table-striped">
     <thead>

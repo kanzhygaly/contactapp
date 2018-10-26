@@ -24,9 +24,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
  *
  * @author yerlana
  */
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping("/contacts")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+//@CrossOrigin("*")
 public class ContactController {
 
     @Autowired
@@ -38,15 +39,19 @@ public class ContactController {
             // if no args were passed, then return all contacts
             return contactService.findAll();
         }
-        
+
         List<ContactDTO> list = new ArrayList<>();
 
         // TODO: implement SearchCriteria and ContactSpecification
         if (search.startsWith("name:")) {
             String name = search.split(":")[1];
+            if (name.isEmpty()) {
+                // if value for name is empty, then return all contacts
+                return contactService.findAll();
+            }
             list = contactService.findAllByName(name);
         }
-        
+
         return list;
     }
 

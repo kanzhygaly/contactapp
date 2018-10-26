@@ -2,11 +2,11 @@
   <h2 class="text-center">Edit Contact</h2>
 
   <form #editForm="ngForm" (ngSubmit)="onSubmit()">
-    <!--<input type="hidden" [(ngModel)]="list-contact.id" id="id"/>-->
+    <!--<input type="hidden" name="id" [(ngModel)]="contact.id">-->
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control" id="name"
-             required
+             required minlength="3"
              [(ngModel)]="contact.name" name="name"
              #name="ngModel">
       <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
@@ -17,7 +17,7 @@
     <div class="form-group">
       <label for="photo">URL to photo</label>
       <input type="text" class="form-control" id="photo"
-             required
+             required minlength="5"
              [(ngModel)]="contact.photo" name="photo"
              #photo="ngModel">
       <div [hidden]="photo.valid || photo.pristine" class="alert alert-danger">
