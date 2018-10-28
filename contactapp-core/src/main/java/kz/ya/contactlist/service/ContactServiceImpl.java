@@ -8,6 +8,7 @@ import kz.ya.contactlist.entity.Contact;
 import kz.ya.contactlist.exception.ContactNotFoundException;
 import kz.ya.contactlist.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -47,6 +48,10 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void delete(Long id) {
-        contactRepository.deleteById(id);
+        try {
+            contactRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new ContactNotFoundException(id);
+        }
     }
 }

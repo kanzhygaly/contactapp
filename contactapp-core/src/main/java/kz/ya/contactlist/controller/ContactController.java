@@ -8,6 +8,7 @@ import kz.ya.contactlist.entity.Contact;
 import kz.ya.contactlist.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+
 /**
  *
  * @author yerlana
@@ -27,7 +30,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequestMapping("/contacts")
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
-//@CrossOrigin("*")
 public class ContactController {
 
     @Autowired
@@ -39,7 +41,6 @@ public class ContactController {
             // if no args were passed, then return all contacts
             return contactService.findAll();
         }
-
         List<ContactDTO> list = new ArrayList<>();
 
         // TODO: implement SearchCriteria and ContactSpecification
@@ -51,7 +52,6 @@ public class ContactController {
             }
             list = contactService.findAllByName(name);
         }
-
         return list;
     }
 
@@ -67,18 +67,20 @@ public class ContactController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody ContactDTO dto) {
+    public ResponseEntity<Object> create(@Valid @RequestBody ContactDTO dto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.noContent().build();
+        }
         Contact savedContact = contactService.saveOrUpdate(dto);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(savedContact.getId()).toUri();
 
         return ResponseEntity.created(location).build();
-
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody ContactDTO dto, @PathVariable long id) {
+    public ResponseEntity<Object> update(@Valid @RequestBody ContactDTO dto, @PathVariable long id) {
         contactService.findById(id);
 
         dto.setId(id);

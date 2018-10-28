@@ -1,5 +1,7 @@
 package kz.ya.contactlist.dto;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  *
  * @author yerlana
@@ -7,10 +9,16 @@ package kz.ya.contactlist.dto;
 public class ContactDTO {
     
     private Long id;
+    @NotBlank
     private String name;
     private String photo;
 
     public ContactDTO() {
+    }
+
+    public ContactDTO(String name, String photo) {
+        this.name = name;
+        this.photo = photo;
     }
 
     public ContactDTO(Long id, String name, String photo) {
